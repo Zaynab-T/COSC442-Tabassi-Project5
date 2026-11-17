@@ -6,6 +6,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  security-events: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -26,6 +30,15 @@ jobs:
 
       - name: Run PIT mutation testing
         run: ./mvnw test-compile org.pitest:pitest-maven:mutationCoverage
+
+      - name: Run SpotBugs static analysis
+        run: ./mvnw spotbugs:spotbugs
+
+      - name: Upload SpotBugs SARIF
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: target/spotbugsSarif.json
 
       - name: Upload PIT report
         if: always()
