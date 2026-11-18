@@ -176,8 +176,11 @@ public class PlayScreen implements Screen {
 						player.y - getScrollY()); break;
 			case KeyEvent.VK_Q: subscreen = new QuaffScreen(player); break;
 			case KeyEvent.VK_R: subscreen = new ReadScreen(player,
-						player.x - getScrollX(), 
+						player.x - getScrollX(),
 						player.y - getScrollY()); break;
+			default:
+				// Key codes not listed above are ignored here; the key-char switch below may still handle them.
+				break;
 			}
 			
 			switch (key.getKeyChar()){
@@ -190,6 +193,9 @@ public class PlayScreen implements Screen {
 					player.moveBy( 0, 0, -1); break;
 			case '>': player.moveBy( 0, 0, 1); break;
 			case '?': subscreen = new HelpScreen(); break;
+			default:
+				// Characters not listed above are ignored.
+				break;
 			}
 		}
 
